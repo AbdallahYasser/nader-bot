@@ -43,9 +43,11 @@ logging.basicConfig(
 log = logging.getLogger("ShariaBot")
 
 def load_config() -> dict:
-    with open(CONFIG_FILE) as f:
+    # Fall back to config.example.json if config.json is absent (e.g. in production containers)
+    cfg_path = CONFIG_FILE if os.path.exists(CONFIG_FILE) else os.path.join(BASE_DIR, "config.example.json")
+    with open(cfg_path) as f:
         cfg = json.load(f)
-    # Secrets can be injected via env vars (Coolify) — override config.json values
+    # Secrets injected via env vars (Coolify) override whatever is in the file
     if os.environ.get("BOT_TOKEN"):
         cfg["telegram"]["bot_token"] = os.environ["BOT_TOKEN"]
     if os.environ.get("CHAT_ID"):
