@@ -230,8 +230,8 @@ def format_daily_update() -> str:
     if egx["current"]:
         arrow = "🟢 ▲" if egx["change_pct"] > 0 else "🔴 ▼"
         lines.append(
-            f"\`EGX30:\` {egx['current']:,.0f} pts  "
-            f"{arrow} \`{egx['change_pct']:+.2f}%\`"
+            f"`EGX30:` {egx['current']:,.0f} pts  "
+            f"{arrow} `{egx['change_pct']:+.2f}%`"
         )
         lines.append(f"_EGX33 Sharia closely mirrors EGX30_")
     else:
@@ -239,12 +239,12 @@ def format_daily_update() -> str:
 
     lines.append("\n🥇 *GOLD PRICE (EGP)*")
     if gold["egp_per_gram"]:
-        lines.append(f"\`24K per gram:\` EGP {gold['egp_per_gram']:,.1f}")
-        lines.append(f"\`USD/EGP rate:\` {gold['usd_egp_rate']:.2f}")
+        lines.append(f"`24K per gram:` EGP {gold['egp_per_gram']:,.1f}")
+        lines.append(f"`USD/EGP rate:` {gold['usd_egp_rate']:.2f}")
         if gold["usd_per_oz"]:
-            lines.append(f"\`Gold (USD/oz):\` ${gold['usd_per_oz']:,.1f}")
+            lines.append(f"`Gold (USD/oz):` ${gold['usd_per_oz']:,.1f}")
     elif gold["usd_egp_rate"]:
-        lines.append(f"\`USD/EGP rate:\` {gold['usd_egp_rate']:.2f}")
+        lines.append(f"`USD/EGP rate:` {gold['usd_egp_rate']:.2f}")
         lines.append("_Gold price per gram unavailable today_")
     else:
         lines.append("_Gold data unavailable_")
@@ -255,11 +255,11 @@ def format_daily_update() -> str:
         emoji = {"Equity": "📈", "Gold": "🥇", "Money Market": "🛡️"}.get(info["type"], "📌")
         if info["type"] == "Equity" and info["proxy"] is not None:
             arrow = "🟢" if info["proxy"] > 0 else "🔴"
-            lines.append(f"{arrow} \`{ticker}\` — EGX30 moved \`{info['proxy']:+.2f}%\` today")
+            lines.append(f"{arrow} `{ticker}` — EGX30 moved `{info['proxy']:+.2f}%` today")
         elif info["type"] == "Gold" and info["proxy"]:
-            lines.append(f"🥇 \`{ticker}\` — Gold @ EGP {info['proxy']:,.1f}/g")
+            lines.append(f"🥇 `{ticker}` — Gold @ EGP {info['proxy']:,.1f}/g")
         elif info["type"] == "Money Market":
-            lines.append(f"🛡️ \`{ticker}\` — Stable accrual ~{info['proxy']:.1f}% annual yield")
+            lines.append(f"🛡️ `{ticker}` — Stable accrual ~{info['proxy']:.1f}% annual yield")
 
     lines.append("\n💡 *TODAY'S SIGNAL*")
     if egx["change_pct"] is not None:
@@ -291,7 +291,7 @@ def format_portfolio_summary(portfolio: dict) -> str:
             "📊 *PORTFOLIO TRACKER*\n\n"
             "No investments recorded yet\\!\n\n"
             "Use /invest to log your monthly investments\\.\n"
-            "Example: \`/invest NMF 6750\`"
+            "Example: `/invest NMF 6750`"
         )
 
     fund_totals = {}
@@ -323,12 +323,12 @@ def format_portfolio_summary(portfolio: dict) -> str:
         pct = (amount / total_invested * 100) if total_invested else 0
         name = fund_info.get(ticker, {}).get("name", ticker)
         bar = "█" * int(pct / 5) + "░" * (20 - int(pct / 5))
-        lines.append(f"\`{ticker}\` {name[:20]}")
+        lines.append(f"`{ticker}` {name[:20]}")
         lines.append(f"  EGP {amount:,.0f}  \\({pct:.1f}%\\)")
-        lines.append(f"  \`{bar}\`")
+        lines.append(f"  `{bar}`")
 
-    lines.append(f"\n💵 *TOTAL INVESTED:* \`EGP {total_invested:,.0f}\`")
-    lines.append(f"📅 *Monthly avg:* \`EGP {total_invested/months_active:,.0f}\`")
+    lines.append(f"\n💵 *TOTAL INVESTED:* `EGP {total_invested:,.0f}`")
+    lines.append(f"📅 *Monthly avg:* `EGP {total_invested/months_active:,.0f}`")
 
     lines.append("\n🎯 *ALLOCATION CHECK*")
     targets = config.get("target_allocation", {})
@@ -339,15 +339,15 @@ def format_portfolio_summary(portfolio: dict) -> str:
             diff = actual_pct - target_pct
             if abs(diff) > 5:
                 status = "⬆️ OVER" if diff > 0 else "⬇️ UNDER"
-                lines.append(f"\`{ticker}\`: {actual_pct:.1f}% vs target {target_pct}%  {status} by {abs(diff):.1f}%")
+                lines.append(f"`{ticker}`: {actual_pct:.1f}% vs target {target_pct}%  {status} by {abs(diff):.1f}%")
             else:
-                lines.append(f"\`{ticker}\`: {actual_pct:.1f}% vs target {target_pct}%  ✅")
+                lines.append(f"`{ticker}`: {actual_pct:.1f}% vs target {target_pct}%  ✅")
 
     lines.append("\n📈 *ESTIMATED GROWTH* \\(illustrative\\)")
     lines.append("_Based on avg 30% annual return assumption_")
     for yr in [1, 3, 5, 10]:
         projected = total_invested * ((1.30) ** yr)
-        lines.append(f"  Year {yr}: \`EGP {projected:,.0f}\`")
+        lines.append(f"  Year {yr}: `EGP {projected:,.0f}`")
 
     lines.append("\n━━━━━━━━━━━━━━━━━━━━━━━━")
     lines.append("_Use /invest \\<TICKER\\> \\<AMOUNT\\> to log investments_")
@@ -367,31 +367,31 @@ def format_macro_alert() -> str:
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━\n")
 
     lines.append("🏦 *CBE POLICY RATE*")
-    lines.append("\`Deposit rate:\` 27.25%  \\(as of Apr 2025\\)")
-    lines.append("\`Lending rate:\` 28.25%")
+    lines.append("`Deposit rate:` 27.25%  \\(as of Apr 2025\\)")
+    lines.append("`Lending rate:` 28.25%")
     lines.append("_⚡ CBE has signaled rate cuts in 2025_")
     lines.append("_→ Impact: MTF yields will decline; equity funds become more attractive_")
 
     lines.append("\n💱 *EGP EXCHANGE RATE*")
     if gold["usd_egp_rate"]:
-        lines.append(f"\`USD/EGP:\` {gold['usd_egp_rate']:.2f}")
-        lines.append(f"\`EUR/EGP: \`~{gold['usd_egp_rate'] * 1.08:.2f} \\(est\\)")
+        lines.append(f"`USD/EGP:` {gold['usd_egp_rate']:.2f}")
+        lines.append(f"`EUR/EGP: `~{gold['usd_egp_rate'] * 1.08:.2f} \\(est\\)")
     else:
         lines.append("_FX data unavailable_")
 
     lines.append("\n🥇 *GOLD*")
     if gold["egp_per_gram"]:
-        lines.append(f"\`24K gold/gram EGP:\` {gold['egp_per_gram']:,.1f}")
+        lines.append(f"`24K gold/gram EGP:` {gold['egp_per_gram']:,.1f}")
         if gold["usd_per_oz"]:
-            lines.append(f"\`Gold USD/oz:\` ${gold['usd_per_oz']:,.1f}")
+            lines.append(f"`Gold USD/oz:` ${gold['usd_per_oz']:,.1f}")
     else:
         lines.append("_Gold price data unavailable_")
 
     lines.append("\n📈 *EGX30 INDEX*")
     if egx["current"]:
         arrow = "▲" if (egx["change_pct"] or 0) > 0 else "▼"
-        lines.append(f"\`Level:\` {egx['current']:,.0f}")
-        lines.append(f"\`Today:\` {arrow} {egx['change_pct']:+.2f}%")
+        lines.append(f"`Level:` {egx['current']:,.0f}")
+        lines.append(f"`Today:` {arrow} {egx['change_pct']:+.2f}%")
     else:
         lines.append("_Market data unavailable_")
 
@@ -478,11 +478,11 @@ async def cmd_start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         f"🕌 *السلام عليكم {name}\\!*\n\n"
         f"Welcome to your *Egypt Sharia Investment Monitor*\\.\n\n"
         f"*Monitoring these funds:*\n"
-        f"📈 \`NMF\` — Naeem Sharia Equity\n"
-        f"📊 \`CMS\` — Misr Shariah Equity\n"
-        f"⚡ \`ASO\` — AZ Sharia Opportunities\n"
-        f"🥇 \`AZG\` — AZ Gold Fund\n"
-        f"🛡️ \`MTF\` — Misr Takaful Fund\n\n"
+        f"📈 `NMF` — Naeem Sharia Equity\n"
+        f"📊 `CMS` — Misr Shariah Equity\n"
+        f"⚡ `ASO` — AZ Sharia Opportunities\n"
+        f"🥇 `AZG` — AZ Gold Fund\n"
+        f"🛡️ `MTF` — Misr Takaful Fund\n\n"
         f"*Automated alerts:*\n"
         f"• ☀️ Daily market brief \\(9 AM Cairo\\)\n"
         f"• 🔔 Rebalancing reminder \\(every 6 months\\)\n"
@@ -518,13 +518,13 @@ async def cmd_invest(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
     args = ctx.args
     if len(args) < 2:
-        tickers_str = " \\| ".join(f"\`{t}\`" for t in valid_tickers)
+        tickers_str = " \\| ".join(f"`{t}`" for t in valid_tickers)
         await update.message.reply_text(
             f"📝 *Log a monthly investment*\n\n"
-            f"Usage: \`/invest TICKER AMOUNT\`\n\n"
+            f"Usage: `/invest TICKER AMOUNT`\n\n"
             f"Valid tickers: {tickers_str}\n\n"
-            f"Example: \`/invest NMF 6750\`\n"
-            f"Example: \`/invest AZG 3000\`",
+            f"Example: `/invest NMF 6750`\n"
+            f"Example: `/invest AZG 3000`",
             parse_mode="MarkdownV2"
         )
         return
@@ -532,7 +532,7 @@ async def cmd_invest(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     ticker = args[0].upper()
     if ticker not in valid_tickers:
         await update.message.reply_text(
-            f"❌ Unknown ticker \`{ticker}\`\\. Valid: {', '.join(valid_tickers)}",
+            f"❌ Unknown ticker `{ticker}`\\. Valid: {', '.join(valid_tickers)}",
             parse_mode="MarkdownV2"
         )
         return
@@ -540,7 +540,7 @@ async def cmd_invest(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     try:
         amount = float(args[1].replace(",", ""))
     except ValueError:
-        await update.message.reply_text("❌ Invalid amount\\. Example: \`/invest NMF 6750\`", parse_mode="MarkdownV2")
+        await update.message.reply_text("❌ Invalid amount\\. Example: `/invest NMF 6750`", parse_mode="MarkdownV2")
         return
 
     portfolio = load_portfolio()
@@ -557,10 +557,10 @@ async def cmd_invest(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
         f"✅ *Investment logged\\!*\n\n"
-        f"Fund: \`{ticker}\` — {fund_name}\n"
-        f"Amount: \`EGP {amount:,.0f}\`\n"
+        f"Fund: `{ticker}` — {fund_name}\n"
+        f"Amount: `EGP {amount:,.0f}`\n"
         f"Date: {datetime.now(CAIRO_TZ).strftime('%d %b %Y')}\n\n"
-        f"Total invested in \`{ticker}\`: \`EGP {total:,.0f}\`\n\n"
+        f"Total invested in `{ticker}`: `EGP {total:,.0f}`\n\n"
         f"View full portfolio: /portfolio",
         parse_mode="MarkdownV2"
     )
@@ -578,7 +578,7 @@ async def cmd_help(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         "/history — Show all logged investments\n"
         "/help — This message\n\n"
         "*Valid fund tickers:*\n"
-        "\`NMF\` \`CMS\` \`ASO\` \`AZG\` \`MTF\`\n\n"
+        "`NMF` `CMS` `ASO` `AZG` `MTF`\n\n"
         "*Scheduled alerts:*\n"
         "• ☀️ 9:00 AM Cairo — Daily market brief\n"
         "• 🔔 Every 6 months — Rebalancing reminder\n"
@@ -593,7 +593,7 @@ async def cmd_history(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     investments = portfolio.get("investments", [])
     if not investments:
         await update.message.reply_text(
-            "No investments logged yet\\.\nUse \`/invest NMF 6750\` to start tracking\\.",
+            "No investments logged yet\\.\nUse `/invest NMF 6750` to start tracking\\.",
             parse_mode="MarkdownV2"
         )
         return
@@ -602,12 +602,12 @@ async def cmd_history(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     lines = ["📋 *INVESTMENT HISTORY* \\(last 20\\)\n"]
     for inv in reversed(recent):
         lines.append(
-            f"\`{inv['date']}\` — \`{inv['ticker']}\` — EGP {inv['amount']:,.0f}"
+            f"`{inv['date']}` — `{inv['ticker']}` — EGP {inv['amount']:,.0f}"
             + (f" _{inv['note']}_" if inv.get("note") else "")
         )
 
     total = sum(i["amount"] for i in investments)
-    lines.append(f"\n💰 *Total all\\-time invested:* \`EGP {total:,.0f}\`")
+    lines.append(f"\n💰 *Total all\\-time invested:* `EGP {total:,.0f}`")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
 # ─────────────────────────────────────────────
@@ -642,10 +642,10 @@ async def button_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await query.message.reply_text(
             "📝 *Logging your investments*\n\n"
             "After each monthly investment on Thndr, log it here:\n\n"
-            "\`/invest NMF 6750\`\n"
-            "\`/invest CMS 3000\`\n"
-            "\`/invest AZG 3000\`\n"
-            "\`/invest MTF 2250\`\n\n"
+            "`/invest NMF 6750`\n"
+            "`/invest CMS 3000`\n"
+            "`/invest AZG 3000`\n"
+            "`/invest MTF 2250`\n\n"
             "This builds your portfolio tracker over time\\.",
             parse_mode="MarkdownV2"
         )
@@ -702,21 +702,21 @@ async def job_macro_spike_check(ctx: ContextTypes.DEFAULT_TYPE):
             if egx["change_pct"] <= -3:
                 alerts.append(
                     f"🔵 *EGX MARKET DROP ALERT*\n"
-                    f"EGX30 fell \`{egx['change_pct']:.2f}%\` today\\.\n"
+                    f"EGX30 fell `{egx['change_pct']:.2f}%` today\\.\n"
                     f"→ *Potential DCA opportunity* for NMF/CMS\\.\n"
                     f"Consider investing this month's equity allocation now\\."
                 )
             elif egx["change_pct"] >= 5:
                 alerts.append(
                     f"🟢 *EGX STRONG RALLY*\n"
-                    f"EGX30 up \`{egx['change_pct']:.2f}%\` today\\.\n"
+                    f"EGX30 up `{egx['change_pct']:.2f}%` today\\.\n"
                     f"→ Hold positions\\. Do not chase the rally\\."
                 )
 
         if gold["usd_egp_rate"] and gold["usd_egp_rate"] > 53:
             alerts.append(
                 f"⚠️ *EGP WEAKNESS ALERT*\n"
-                f"USD/EGP at \`{gold['usd_egp_rate']:.2f}\`\n"
+                f"USD/EGP at `{gold['usd_egp_rate']:.2f}`\n"
                 f"→ AZG \\(gold fund\\) is your best hedge right now\\."
             )
 

@@ -1,7 +1,8 @@
 services:
   bot:
     build: .
-    env_file: .env
     volumes:
-      - ./data:/app/data
+      - nader-bot-data:/app/data
     restart: unless-stopped
+volumes:
+  nader-bot-data:
