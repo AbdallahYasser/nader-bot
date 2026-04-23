@@ -1,0 +1,10 @@
+config.json
+.env
+data/
+bot.log
+__pycache__/
+*.pyc
+*.pyo
+
+# Source clippings (kept locally, not in repo)
+*.md

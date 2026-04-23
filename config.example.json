@@ -1,0 +1,61 @@
+{
+  "telegram": {
+    "bot_token": "YOUR_BOT_TOKEN_HERE",
+    "chat_id": "YOUR_CHAT_ID_HERE"
+  },
+
+  "funds": {
+    "NMF": {
+      "name": "Naeem Sharia Equity",
+      "type": "equity",
+      "manager": "Naeem Asset Management",
+      "sharia_board": "Dr. Ali Gomaa",
+      "estimated_annual_yield": null
+    },
+    "CMS": {
+      "name": "Misr Shariah Equity",
+      "type": "equity",
+      "manager": "CI Asset Management",
+      "sharia_board": "EGX33 Index screening",
+      "estimated_annual_yield": null
+    },
+    "ASO": {
+      "name": "AZ Sharia Opportunities",
+      "type": "equity",
+      "manager": "Azimut Egypt",
+      "sharia_board": "FRA Sharia Committee",
+      "estimated_annual_yield": null
+    },
+    "AZG": {
+      "name": "AZ Gold Fund",
+      "type": "gold",
+      "manager": "Azimut Egypt",
+      "sharia_board": "FRA supervised",
+      "estimated_annual_yield": null
+    },
+    "MTF": {
+      "name": "Misr Takaful Fund",
+      "type": "money_market",
+      "manager": "AAIM",
+      "sharia_board": "Dr. Ali Gomaa",
+      "estimated_annual_yield": 25.0
+    }
+  },
+
+  "target_allocation": {
+    "NMF": 45,
+    "CMS": 20,
+    "AZG": 20,
+    "MTF": 15
+  },
+
+  "monthly_investment_egp": 15000,
+
+  "alerts": {
+    "egx_drop_threshold_pct": -3.0,
+    "egx_rally_threshold_pct": 5.0,
+    "usd_egp_alert_above": 53.0,
+    "daily_brief_time": "09:00",
+    "macro_check_interval_hours": 4
+  }
+}
